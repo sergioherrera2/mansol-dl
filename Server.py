@@ -14,11 +14,9 @@ from work_queue import WorkQueue
 
 class SchedulerFactoryI(Downloader.SchedulerFactory):
     def __init__(self, work_queue):
-        print("Entrando a init")
         self.work_queue = work_queue
         
     def make(self, nombre, current = None):
-        print("Entrando a make" + "Con el servidor" + nombre)
         nombre = DownloadSchedulerI(self.work_queue)
         proxy = current.adapter.addWithUUID(nombre)
         return Downloader.DownloadSchedulerPrx.checkedCast(proxy)
@@ -104,13 +102,11 @@ class Server(Ice.Application):
 
         work_queue = WorkQueue(progress_topic)
 
-        #servant = DownloadSchedulerI(work_queue)
         servant = SchedulerFactoryI(work_queue)
-        
         broker = self.communicator()
 
         adapter = broker.createObjectAdapter('DlAdapter')
-        adapter.add(servant, broker.stringToIdentity("dl1"))
+        print("[ADAPTER]", adapter.add(servant, broker.stringToIdentity("dl1")))
         adapter.activate()
        
         work_queue.start()
