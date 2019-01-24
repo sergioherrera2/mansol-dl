@@ -19,12 +19,11 @@ class SchedulerFactoryI(Downloader.SchedulerFactory):
         
     def make(self, nombre, current = None):
         serverid = Ice.stringToIdentity(nombre)
-        nombre = DownloadSchedulerI(self.work_queue)
-        proxy = current.adapter.add(nombre,serverid)
+        dl = DownloadSchedulerI(self.work_queue)
+        proxy = current.adapter.add(dl,serverid)
         return Downloader.DownloadSchedulerPrx.checkedCast(proxy)
     
     def kill(self, nombre, current = None): 
-        print("Entrando a kill")
         serverid = Ice.stringToIdentity(nombre)
         current.adapter.remove(serverid)
     """    
