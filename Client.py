@@ -107,14 +107,14 @@ class Client(Ice.Application):
                 print('[INFO] Asegurese de poner el mismo nombre que el que aparece en la lista de canciones:')
                 cancion = input()
                 
-                transfer = dl.get(cancion)
-
-                self.receive(transfer,cancion)
-                
-                print()
-                print('\033[36m' + "[INFO] " + cancion + " recibida correctamente." + '\033[0m')
-                print()
-
+                try:
+                    transfer = dl.get(cancion)
+                    self.receive(transfer,cancion)
+                    print()
+                    print('\033[36m' + "[INFO] " + cancion + " recibida correctamente." + '\033[0m')
+                    print()
+                except Exception as e:
+                    print("[ERROR] Esa canción no está disponible en el servidor.")
                 
             elif(opcion == '4'):
                 return 0;

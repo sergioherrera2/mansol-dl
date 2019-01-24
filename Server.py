@@ -32,12 +32,12 @@ class DownloadSchedulerI(Downloader.DownloadScheduler):
     def get(self, song, current = None):
         print("[INFO] Nueva solicitud de copia del servidor recibida (", song, ")")
         song = './Descargas/' + song
-        servant = TransferI(song)
-        proxy = current.adapter.addWithUUID(servant)
-
-        return Downloader.TransferPrx.checkedCast(proxy)
-        
-        
+        try:
+        	servant = TransferI(song)
+        	proxy = current.adapter.addWithUUID(servant)
+        	return Downloader.TransferPrx.checkedCast(proxy)
+        except FileNotFoundError as e:
+        	print("[ERROR] La canción escrita no existe en el servidor.")   
 
 class TransferI(Downloader.Transfer):
     '''
