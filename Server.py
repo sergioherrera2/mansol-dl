@@ -12,17 +12,22 @@ import Downloader
 
 from work_queue import WorkQueue
 
+
 class SchedulerFactoryI(Downloader.SchedulerFactory):
     def __init__(self, work_queue):
         self.work_queue = work_queue
         
     def make(self, nombre, current = None):
+        serverid = Ice.stringToIdentity(nombre)
         nombre = DownloadSchedulerI(self.work_queue)
-        proxy = current.adapter.addWithUUID(nombre)
+        proxy = current.adapter.add(nombre,serverid)
         return Downloader.DownloadSchedulerPrx.checkedCast(proxy)
-    """
-    def kill(self, nombre, current = None):
-        
+    
+    def kill(self, nombre, current = None): 
+        print("Entrando a kill")
+        serverid = Ice.stringToIdentity(nombre)
+        current.adapter.remove(serverid)
+    """    
     def availableSchedulers(self, current = None):
     """
 

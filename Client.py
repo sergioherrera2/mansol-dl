@@ -98,6 +98,7 @@ class Client(Ice.Application):
                 print()
                 print('\033[36m' + "[INFO] Descarga completada correctamente, puedes encontrar tu canción en el servidor." + '\033[0m')
                 print()
+                sf.kill(nombre)
                 
             elif(opcion == '2'):
                 print("[INFO] Canciones disponibles en el servidor: ")
@@ -107,7 +108,7 @@ class Client(Ice.Application):
                     
             elif(opcion == '3'):    
                 print('[INFO] Indique el nombre específico de la canción.')
-                print('[INFO] Asegurese de poner el mismo nombre que el que aparece en la lista de canciones:')
+                print('[INFO] Asegúrese de poner el mismo nombre que el que aparece en la lista de canciones:')
                 cancion = input()
                 
                 try:
