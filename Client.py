@@ -90,7 +90,7 @@ class Client(Ice.Application):
                 contador = contador + 1
                 print("[INFO] Especifique la dirección url del vídeo: ")
                 url = input()
-                nombre = 'Nombre' + str(contador)
+                nombre = 'Servidor ' + str(contador)
                 dl = sf.make(nombre)
                 dl.addDownloadTask(url)
                 adapter.activate()
@@ -101,15 +101,23 @@ class Client(Ice.Application):
                 sf.kill(nombre)
                 
             elif(opcion == '2'):
+                contador = contador + 1
                 print("[INFO] Canciones disponibles en el servidor: ")
+                nombre = 'Servidor ' + str(contador)
+                dl = sf.make(nombre)
                 songs = dl.getSongList()
                 for i in songs:
                     print('[♫ ]', i)
+                sf.kill(nombre)
                     
-            elif(opcion == '3'):    
+            elif(opcion == '3'):
+                contador = contador + 1
                 print('[INFO] Indique el nombre específico de la canción.')
                 print('[INFO] Asegúrese de poner el mismo nombre que el que aparece en la lista de canciones:')
                 cancion = input()
+                
+                nombre = 'Servidor ' + str(contador)
+                dl = sf.make(nombre)
                 
                 try:
                     transfer = dl.get(cancion)

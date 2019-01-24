@@ -23,7 +23,8 @@ class SchedulerFactoryI(Downloader.SchedulerFactory):
         proxy = current.adapter.add(dl,serverid)
         return Downloader.DownloadSchedulerPrx.checkedCast(proxy)
     
-    def kill(self, nombre, current = None): 
+    def kill(self, nombre, current = None):
+        print("Kill del server " + nombre)
         serverid = Ice.stringToIdentity(nombre)
         current.adapter.remove(serverid)
     """    
@@ -77,6 +78,14 @@ class TransferI(Downloader.Transfer):
         print("\033[1;0m")
         print()
 
+"""
+class SyncEventI(Downloader.SyncEvent):
+    def notify(self, canciones, current = None):
+        print("[INFO] Canciones en el servidor:", canciones) #Downloader.SongList
+        
+    def requestSync(self,current = None):
+"""        
+        
 class Server(Ice.Application):
     def get_topic_manager(self):
         key = 'IceStorm.TopicManager.Proxy'
