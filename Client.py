@@ -57,6 +57,7 @@ class Client(Ice.Application):
 
 
     def run(self, argv):
+        contador = 0
         topic_mgr = self.get_topic_manager()
         if not topic_mgr:
             print (': invalid proxy')
@@ -77,7 +78,8 @@ class Client(Ice.Application):
         topic.subscribeAndGetPublisher(qos, subscriber)
 
         base = self.communicator().stringToProxy(argv[1])
-        dl = Downloader.DownloadSchedulerPrx.checkedCast(base)
+        #dl = Downloader.DownloadSchedulerPrx.checkedCast(base)
+        dl = Downloader.SchedulerFactoryPrx.checkedCast(base)
 
         if not dl:
             raise RuntimeError("Invalid proxy")
@@ -87,9 +89,12 @@ class Client(Ice.Application):
             opcion = self.menu()
 
             if(opcion == '1'):
+                contador = contador + 1
                 print("[INFO] Especifique la dirección url del vídeo: ")
                 url = input()
-                dl.addDownloadTask(url)
+                nombre = 'Nombre' + str(contador)
+                dl2 = dl.make(nombre)
+                dl2.addDownloadTask(url)
                 adapter.activate()
                 topic.unsubscribe(subscriber)
                 print()
