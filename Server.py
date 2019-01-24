@@ -12,6 +12,13 @@ import Downloader
 
 from work_queue import WorkQueue
 
+class SchedulerFactoryI(Downloader.SchedulerFactory):
+    def make(self, nombre, current = None):
+        servant = DownloadSchedulerI(nombre)
+        proxy = current.adapter.addWithUUID(servant)
+
+        return Downloader.DownloadSchedulerPrx.checkedCast(proxy)
+
 
 class DownloadSchedulerI(Downloader.DownloadScheduler):
     def __init__(self, work_queue):
