@@ -18,10 +18,15 @@ class SchedulerFactoryI(Downloader.SchedulerFactory):
         self.work_queue = work_queue
         
     def make(self, nombre, current = None):
-        print("Entrando a make")
-        servant = DownloadSchedulerI(self.work_queue)
-        proxy = current.adapter.addWithUUID(servant)
+        print("Entrando a make" + "Con el servidor" + nombre)
+        nombre = DownloadSchedulerI(self.work_queue)
+        proxy = current.adapter.addWithUUID(nombre)
         return Downloader.DownloadSchedulerPrx.checkedCast(proxy)
+    """
+    def kill(self, nombre, current = None):
+        
+    def availableSchedulers(self, current = None):
+    """
 
 
 class DownloadSchedulerI(Downloader.DownloadScheduler):
