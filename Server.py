@@ -24,7 +24,6 @@ class SchedulerFactoryI(Downloader.SchedulerFactory):
         return Downloader.DownloadSchedulerPrx.checkedCast(proxy)
     
     def kill(self, nombre, current = None):
-        print("Kill del server " + nombre)
         serverid = Ice.stringToIdentity(nombre)
         current.adapter.remove(serverid)
     """    
