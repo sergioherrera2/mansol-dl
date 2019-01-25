@@ -26,7 +26,7 @@ run-server:  icestorm.config
 	./Server.py --Ice.Config=server.config
 
 run-client: icestorm.config
-	./Client.py "dl1 -t -e 1.1:tcp -h 192.168.1.37 -p 9090 -t 60000" --Ice.Config=client.config 
+	./Client.py --Ice.Config=client.config DownloaderAdapter
 
 	
 copy_binaries:

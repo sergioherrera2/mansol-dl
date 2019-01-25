@@ -118,7 +118,7 @@ class Server(Ice.Application):
         broker = self.communicator()
 
         adapter = broker.createObjectAdapter('DlAdapter')
-        print("[ADAPTER]", adapter.add(servant, broker.stringToIdentity("dl1")))
+        print("[ADAPTER]", adapter.add(servant, broker.stringToIdentity("DownloaderAdapter")))
         adapter.activate()
        
         work_queue.start()
