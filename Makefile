@@ -26,9 +26,8 @@ run-server:  icestorm.config
 	./Server.py --Ice.Config=server.config
 
 run-client: icestorm.config
-	./Client.py --Ice.Config=client.config DownloaderAdapter
+	./Client.py --Ice.Config=client.config Downloader1
 
-	
 copy_binaries:
 	mkdir -p /tmp/mansol
 	cp Server.py /tmp/mansol
