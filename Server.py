@@ -82,10 +82,6 @@ class SyncEventI(Downloader.SyncEvent):
 	def __init__(self, canciones):
         self.canciones = canciones
 
-        self.download_path = os.getcwd() + '/Descargas'
-        if not os.path.exists(self.download_path):
-            os.makedirs(self.download_path)
-
     def notify(self, cancionesrecibidas, current = None):
         print("[INFO] Canciones en el servidor:") #Downloader.SongList
         print(cancionesrecibidas)
