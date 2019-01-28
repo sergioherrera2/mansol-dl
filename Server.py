@@ -77,13 +77,23 @@ class TransferI(Downloader.Transfer):
         print("\033[1;0m")
         print()
 
-"""
+#WIP
 class SyncEventI(Downloader.SyncEvent):
-    def notify(self, canciones, current = None):
-        print("[INFO] Canciones en el servidor:", canciones) #Downloader.SongList
-        
-    def requestSync(self,current = None):
-"""        
+	def __init__(self, canciones):
+        self.canciones = canciones
+
+        self.download_path = os.getcwd() + '/Descargas'
+        if not os.path.exists(self.download_path):
+            os.makedirs(self.download_path)
+
+    def notify(self, cancionesrecibidas, current = None):
+        print("[INFO] Canciones en el servidor:") #Downloader.SongList
+        print(cancionesrecibidas)
+        self.canciones=list(set(self.canciones) | set(cancionesrecibidas))
+
+    def requestSync(self, current = None):
+       print("[INFO] Solicitud de sincronización.")
+       self.notify(self.canciones)
         
 class Server(Ice.Application):
     def get_topic_manager(self):
@@ -111,6 +121,7 @@ class Server(Ice.Application):
 
         publisher = topic.getPublisher()
         progress_topic = Downloader.ProgressEventPrx.uncheckedCast(publisher)
+        #servant.sync_proxy = Downloader.SyncEventPrx.uncheckedCast(self.get_topic_manager("SyncTopic").subscribeAndGetPublisher({},proxy))
 
         work_queue = WorkQueue(progress_topic)
 
