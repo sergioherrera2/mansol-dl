@@ -1,6 +1,4 @@
 
-all:
-
 clean:
 	$(RM) *~
 	$(RM) -r db
@@ -26,9 +24,13 @@ run-server:  icestorm.config
 	./Server.py --Ice.Config=server.config
 
 run-client: icestorm.config
+	./Client.py "Downloader1 -t -e 1.1:tcp -h 192.168.1.36 -p 4061 -t 60000" --Ice.Config=client.config
+	#La ip debe ajustarse a la que corresponda
+
+run-iceclient: icestorm.config
 	./Client.py --Ice.Config=client.config Downloader1
 
-copy_binaries:
+copy-binaries:
 	mkdir -p /tmp/mansol
 	cp Server.py /tmp/mansol
 	cp server.config /tmp/mansol

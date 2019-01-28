@@ -101,7 +101,7 @@
             </properties>
             <distrib icepatch="${application}.IcePatch2/server"/>
             <adapter name="DlAdapter" endpoints="default" id="${server}.DlAdapter">
-               <object identity="dl1" type="::Downloader::DownloadScheduler"/>
+               <object identity="Downloader1" type="::Downloader::DownloadScheduler"/>
             </adapter>
          </server>
       </server-template>

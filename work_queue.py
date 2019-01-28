@@ -60,14 +60,10 @@ def _download_mp3_(url, destination='./Descargas/'):
     options['outtmpl'] = os.path.join(destination, '%(title)s.%(ext)s')
 
     with youtube_dl.YoutubeDL(options) as ydl:
-        #aquí no tiene que haber un try, está abajo. Comprobar .download(url)
         ydl.download([url])
         sys.stdout.write("\033[1;36m")
         print("[INFO] Descarga completada.")
         sys.stdout.write("\033[1;0m")
-        #sys.stderr.write("\033[1;31m")
-        #print("[ERROR] Dirección url inválida, no se ha descargado nada.",file=sys.stderr)
-        #sys.stdout.write("\033[1;0m")
     
     filename = task_status['filename']
     # BUG: filename extension is wrong, it must be mp3
@@ -93,8 +89,11 @@ class WorkQueue(Thread):
             try:
                 job.download()
                 self.ProgressTopic.notify(Downloader.ClipData(job.get_url(), Downloader.Status.DONE))
-            except Exception as error:
+            except Exception:
                 self.ProgressTopic.notify(Downloader.ClipData(job.get_url(), Downloader.Status.ERROR))
+                #sys.stderr.write("\033[1;31m")
+                #print("[ERROR] Dirección url inválida, no se ha descargado nada.",file=sys.stderr)
+                #sys.stdout.write("\033[1;0m")
             self.queue.task_done()
 
         self.queue.task_done()

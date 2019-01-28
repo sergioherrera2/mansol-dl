@@ -26,9 +26,6 @@ class SchedulerFactoryI(Downloader.SchedulerFactory):
     def kill(self, nombre, current = None):
         serverid = Ice.stringToIdentity(nombre)
         current.adapter.remove(serverid)
-    """    
-    def availableSchedulers(self, current = None):
-    """
 
 
 class DownloadSchedulerI(Downloader.DownloadScheduler):
@@ -76,20 +73,6 @@ class TransferI(Downloader.Transfer):
         print("[INFO] Solicitud de copia del servidor completada.")
         print("\033[1;0m")
         print()
-
-#WIP
-class SyncEventI(Downloader.SyncEvent):
-	def __init__(self, canciones):
-        self.canciones = canciones
-
-    def notify(self, cancionesrecibidas, current = None):
-        print("[INFO] Canciones en el servidor:") #Downloader.SongList
-        print(cancionesrecibidas)
-        self.canciones=list(set(self.canciones) | set(cancionesrecibidas))
-
-    def requestSync(self, current = None):
-       print("[INFO] Solicitud de sincronización.")
-       self.notify(self.canciones)
         
 class Server(Ice.Application):
     def get_topic_manager(self):
@@ -117,7 +100,6 @@ class Server(Ice.Application):
 
         publisher = topic.getPublisher()
         progress_topic = Downloader.ProgressEventPrx.uncheckedCast(publisher)
-        #servant.sync_proxy = Downloader.SyncEventPrx.uncheckedCast(self.get_topic_manager("SyncTopic").subscribeAndGetPublisher({},proxy))
 
         work_queue = WorkQueue(progress_topic)
 
